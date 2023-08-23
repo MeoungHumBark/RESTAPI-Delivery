@@ -15,5 +15,6 @@
 
 ## 2. API Class Diagram
 <img width="648" alt="Screenshot 2023-08-22 at 9 20 36 PM" src="https://github.com/MeoungHumBark/FoodDelivertAPI/assets/63912674/3864b07d-fd48-4d86-b438-20041eda58b3">
-## 2. API ERD
+
+## 3. API ERD
 <img width="247" alt="Screenshot 2023-08-22 at 9 20 45 PM" src="https://github.com/MeoungHumBark/FoodDelivertAPI/assets/63912674/ff1e45e1-8d25-4d24-a191-6062a1cab863">
