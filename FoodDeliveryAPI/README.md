@@ -14,7 +14,7 @@
 (6) 음식 개별 삭제 : DELETE /foods/1
 
 ## 2. API Class Diagram
-<img width="648" alt="Screenshot 2023-08-22 at 9 20 36 PM" src="https://github.com/MeoungHumBark/FoodDelivertAPI/assets/63912674/3864b07d-fd48-4d86-b438-20041eda58b3">
+<img width="648" alt="Screenshot 2023-08-22 at 9 20 36 PM" src="https://github.com/MeoungHumBark/REST-DeliveryApp/assets/63912674/945a48a6-d50c-44fa-b5b8-f60dad9193cb">
 
 ## 3. API ERD
-<img width="247" alt="Screenshot 2023-08-22 at 9 20 45 PM" src="https://github.com/MeoungHumBark/FoodDelivertAPI/assets/63912674/ff1e45e1-8d25-4d24-a191-6062a1cab863">
+<img width="247" alt="Screenshot 2023-08-22 at 9 20 45 PM" src="https://github.com/MeoungHumBark/REST-DeliveryApp/assets/63912674/a3a17a6e-2b9c-49ac-993b-ea554decafcc">
