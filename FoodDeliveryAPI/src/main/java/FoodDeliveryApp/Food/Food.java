@@ -1,7 +1,12 @@
 package FoodDeliveryApp.Food;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Builder
+@Getter @Setter
 @Entity
 @Table(name="food")
 public class Food {
@@ -15,28 +20,4 @@ public class Food {
 
     @Column(name = "fprice")
     private int price;
-
-   public int getId() {
-       return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
 }

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.toList;
+
 @Service
 @Transactional
 public class FoodService {
@@ -15,37 +18,36 @@ public class FoodService {
     public FoodService (JpaFoodRepository foodRepository) {
         this.foodRepository = foodRepository;
     }
-    public Optional<Food> get(Integer id) {
-        return foodRepository.findById(id);
+
+    public List<FoodDTO> getAll() {
+        return foodRepository.findAll().stream()
+                .map(FoodMapper::mapEntityToDto)
+                .collect(toList());
+    }
+    public FoodDTO get(Integer id) {
+        Optional<Food> foodEntity = foodRepository.findById(id);
+        return FoodMapper.mapEntityToDto(foodEntity.get());
     }
 
-    public List<Food> getAll() {
-        return foodRepository.findAll();
+    public void set(FoodDTO foodDTO) {
+        Food foodEntity = FoodMapper.mapDtoToEntity(foodDTO);
+        foodRepository.save(foodEntity);
     }
+    public void update(Integer id, FoodDTO foodDTO) {
+        Optional<Food> existingFoodEntity = foodRepository.findById(id);
 
-    public Food set(Food food) {
-        return foodRepository.save(food);
-    }
-    public ResponseEntity<Food> update(Integer id, Food food) {
-        if (!foodRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+        if (existingFoodEntity != null) {
+            Food updatedFoodEntity = FoodMapper.mapDtoToEntity(foodDTO);
+            updatedFoodEntity.setId(id);
+            foodRepository.save(updatedFoodEntity);
         }
-        food.setId(id);
-        Food updatedFood = foodRepository.save(food);
-        return ResponseEntity.ok(updatedFood);
     }
 
-    public ResponseEntity<Void> del(Integer id) {
-        if (!foodRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        foodRepository.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    public ResponseEntity<Void> delAll() {
+    public void delAll() {
         foodRepository.deleteAll();
-        return ResponseEntity.noContent().build();
+    }
+    public void del(Integer id) {
+        foodRepository.deleteById(id);
     }
 
 }

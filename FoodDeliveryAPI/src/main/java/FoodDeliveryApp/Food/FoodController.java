@@ -1,16 +1,14 @@
 package FoodDeliveryApp.Food;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
+@RequestMapping("/foods")
 public class FoodController {
     private final FoodService foodService;
     
@@ -19,35 +17,52 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @GetMapping("/foods")
-    public List<Food> getAllFoods()  {
-        return foodService.getAll();
+    @GetMapping()
+    ResponseEntity<List<FoodDTO>> getAllFoods()  {
+        if (foodService.getAll()==null) {
+            return ResponseEntity.notFound().build();
+        }
+        List<FoodDTO> allFood = foodService.getAll();
+        return ResponseEntity.status(HttpStatus.OK).body(allFood);
     }
 
-    @GetMapping("/foods/{id}")
-    Optional getFoods(@PathVariable Integer id) {
-        return foodService.get(id);
+    @GetMapping("{id}")
+    ResponseEntity<FoodDTO> getFood(@PathVariable Integer id) {
+        if (foodService.get(id)==null) {
+            return ResponseEntity.notFound().build();
+        }
+        FoodDTO selectedFood = foodService.get(id);
+        return ResponseEntity.status(HttpStatus.OK).body(selectedFood);
     }
 
-    @PostMapping("/foods")
-    ResponseEntity<Food> setFoods(@RequestBody Food food) {
-        foodService.set(food);
-        return ResponseEntity.status(HttpStatus.CREATED).body(food);
+    @PostMapping()
+    ResponseEntity<FoodDTO> setFood(@RequestBody FoodDTO foodDTO) {
+        foodService.set(foodDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(foodDTO);
     }
 
-    @PutMapping("/foods/{id}")
-    Food update(@PathVariable Integer id, @RequestBody Food food) {
-        return foodService.update(id,food).getBody();
+    @PutMapping("{id}")
+    ResponseEntity<FoodDTO> updateFood(@PathVariable Integer id, @RequestBody FoodDTO foodDTO) {
+        if (foodService.get(id)==null) {
+            return ResponseEntity.notFound().build();
+        }
+        foodService.update(id,foodDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(foodDTO);
     }
 
-    @DeleteMapping("/foods")
-    ResponseEntity<Void> delAllFoods()  {
-        return foodService.delAll();
+    @DeleteMapping()
+    ResponseEntity<String> delAllFood()  {
+        foodService.delAll();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found");
     }
 
-    @DeleteMapping ("/foods/{id}")
-    ResponseEntity<Void> deleteFoods(@PathVariable Integer id) {
-        return foodService.del(id);
+    @DeleteMapping ("{id}")
+    ResponseEntity<String> deleteFood(@PathVariable Integer id) {
+        if (foodService.get(id)==null) {
+            return ResponseEntity.notFound().build();
+        }
+        foodService.del(id);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found");
     }
 
 }
