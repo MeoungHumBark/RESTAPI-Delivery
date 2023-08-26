@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Builder
-@AllArgsConstructor
 @Getter
 @Setter
 public class FoodDTO {
